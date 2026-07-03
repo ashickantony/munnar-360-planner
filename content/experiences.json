@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "tea-hills",
+    "title": "Tea Hills",
+    "hook": "Meet the mist at the tea fields. Sunrise drives through Munnar's ridges.",
+    "priceFrom": 4500,
+    "description": "Wind up through the tea estates as the fog lifts off the ridges. We time the drive for the light — Kolukkumalai and Top Station at sunrise, the Eravikulam grasslands by mid-morning, and a slow stop wherever the view earns it. A local guide who grew up on these hills rides with you, so you hear the estate stories the signboards leave out.",
+    "included": ["Sunrise estate drive", "Eravikulam viewpoint", "Top Station stop", "Local Munnar guide", "Chai at a working estate"],
+    "images": ["/images/tea-hills-1.jpg", "/images/tea-hills-2.jpg", "/images/tea-hills-3.jpg"],
+    "accent": "moss"
+  },
+  {
+    "slug": "backwaters",
+    "title": "Backwaters",
+    "hook": "Cruise the Alleppey backwaters aboard a traditional kettuvallam.",
+    "priceFrom": 6500,
+    "description": "Board a traditional kettuvallam houseboat and let Alleppey and Kumarakom drift past — paddy fields below the waterline, village jetties, kingfishers on the reeds. Lunch is Kerala home cooking, cooked onboard. You set the pace: a half-day glide or an overnight with dinner under the deck lights.",
+    "included": ["Kettuvallam houseboat cruise", "Onboard Kerala lunch", "Village backwater route", "Sunset deck time", "Pickup from Alleppey"],
+    "images": ["/images/backwaters-1.jpg", "/images/backwaters-2.jpg", "/images/backwaters-3.jpg"],
+    "accent": "teal-water"
+  },
+  {
+    "slug": "offbeat-trails",
+    "title": "Offbeat Trails",
+    "hook": "Bike routes, waterfalls and viewpoints most tours drive straight past.",
+    "priceFrom": 5000,
+    "description": "The roads the packaged tours skip. We map a route by bike or jeep to the waterfalls, ridge viewpoints and spice-country lanes that stay quiet because they're a little harder to reach. Flexible by design — tell us whether you want the ride, the walk, or both, and we build the day around it.",
+    "included": ["Curated bike or jeep route", "Hidden waterfall stops", "Ridge viewpoints", "Spice-country lanes", "Route planning with a local rider"],
+    "images": ["/images/offbeat-trails-1.jpg", "/images/offbeat-trails-2.jpg", "/images/offbeat-trails-3.jpg"],
+    "accent": "gold"
+  }
+]

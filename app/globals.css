@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --moss: #3b4a25;
+    --deep-forest: #1c2415;
+    --mist: #ede9de;
+    --teal-water: #5b7b7a;
+    --gold: #c9a24b;
+    --cream: #f7f5ef;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* offset for the sticky header when jumping to #anchors */
+    scroll-padding-top: 84px;
+  }
+
+  body {
+    background-color: var(--mist);
+    color: var(--deep-forest);
+    font-family: var(--font-jakarta), system-ui, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Visible keyboard focus everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono uppercase text-gold;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+  }
+
+  /* Card border: 1px moss at 12% opacity. */
+  .brand-card-border {
+    border: 1px solid rgb(59 74 37 / 0.12);
+  }
+
+  .section-shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+}

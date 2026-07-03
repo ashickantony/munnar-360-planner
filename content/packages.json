@@ -1,0 +1,51 @@
+[
+  {
+    "slug": "backwater-escape",
+    "name": "Backwater Escape",
+    "days": 3,
+    "priceFrom": 9999,
+    "summary": "Three unhurried days on the Alleppey backwaters with an overnight kettuvallam cruise.",
+    "itinerary": [
+      { "day": 1, "title": "Arrive Alleppey", "detail": "Pickup, settle in, and an evening walk along the canals. Dinner at a local toddy-shop kitchen." },
+      { "day": 2, "title": "Overnight houseboat", "detail": "Board the kettuvallam mid-morning. Cruise the village backwaters, lunch onboard, sunset on the deck, dinner and a night on the water." },
+      { "day": 3, "title": "Kumarakom & depart", "detail": "Morning at the Kumarakom bird sanctuary, a slow breakfast, and drop-off." }
+    ],
+    "includes": ["2 nights stay (1 houseboat, 1 lakeside)", "All backwater cruises", "Daily breakfast + onboard meals", "Private transfers", "Local guide"],
+    "excludes": ["Flights / train", "Personal expenses", "Travel insurance", "Anything not listed under includes"],
+    "images": ["/images/backwater-escape-1.jpg", "/images/backwater-escape-2.jpg"]
+  },
+  {
+    "slug": "munnar-mist",
+    "name": "Munnar Mist",
+    "days": 4,
+    "priceFrom": 12499,
+    "summary": "Four days in the tea hills — sunrise ridges, Eravikulam, and the estate roads.",
+    "itinerary": [
+      { "day": 1, "title": "Arrive Munnar", "detail": "Drive up through the estates. Evening at a viewpoint as the mist rolls in." },
+      { "day": 2, "title": "Kolukkumalai sunrise", "detail": "Pre-dawn jeep to Kolukkumalai for sunrise above the clouds, then the tea museum and estate walk." },
+      { "day": 3, "title": "Eravikulam & Top Station", "detail": "Eravikulam National Park in the morning, Top Station and Echo Point in the afternoon." },
+      { "day": 4, "title": "Slow morning & depart", "detail": "A relaxed estate breakfast, last photos, and drop-off." }
+    ],
+    "includes": ["3 nights hill-view stay", "Kolukkumalai sunrise jeep", "All sightseeing + entries", "Private transfers", "Daily breakfast", "Local Munnar guide"],
+    "excludes": ["Flights / train", "Lunch & dinner", "Personal expenses", "Anything not listed under includes"],
+    "images": ["/images/munnar-mist-1.jpg", "/images/munnar-mist-2.jpg"]
+  },
+  {
+    "slug": "full-360-kerala",
+    "name": "Full 360° Kerala",
+    "days": 6,
+    "priceFrom": 19999,
+    "summary": "The complete loop — tea hills, backwaters and an offbeat trail day, end to end.",
+    "itinerary": [
+      { "day": 1, "title": "Arrive Munnar", "detail": "Drive up into the tea country. Evening viewpoint and a settling-in dinner." },
+      { "day": 2, "title": "Tea hills", "detail": "Sunrise ridge, Eravikulam, estate walk and the museum." },
+      { "day": 3, "title": "Offbeat trail day", "detail": "Bike or jeep route to hidden waterfalls and quiet viewpoints, guided by a local rider." },
+      { "day": 4, "title": "Munnar to Alleppey", "detail": "Scenic descent to the coast, arrive by the backwaters for the evening." },
+      { "day": 5, "title": "Overnight houseboat", "detail": "Board the kettuvallam, cruise the village backwaters, and spend the night on the water." },
+      { "day": 6, "title": "Kumarakom & depart", "detail": "Morning at Kumarakom, a slow breakfast, and drop-off." }
+    ],
+    "includes": ["5 nights stay (hill, trail, houseboat, lakeside)", "All experiences across the loop", "Sunrise jeep + houseboat cruise", "Private transfers throughout", "Daily breakfast + onboard meals", "Local guides at each stop"],
+    "excludes": ["Flights / train", "Most lunches & dinners", "Personal expenses", "Travel insurance", "Anything not listed under includes"],
+    "images": ["/images/full-360-kerala-1.jpg", "/images/full-360-kerala-2.jpg"]
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "brandName": "Munnar 360°",
+  "tagline": "God's Own Country",
+  "phones": ["7306724420", "9400227805"],
+  "whatsapp": "917306724420",
+  "instagramHandle": "@munnar_360_planner",
+  "instagramUrl": "https://www.instagram.com/munnar_360_planner",
+  "nav": [
+    { "label": "Experiences", "href": "/#experiences" },
+    { "label": "Packages", "href": "/#packages" },
+    { "label": "About", "href": "/about" }
+  ],
+  "whyUs": [
+    {
+      "title": "A local Kerala team",
+      "detail": "We live here. The guides on your trip grew up on these hills and backwaters — not a call centre three states away."
+    },
+    {
+      "title": "Routes built around you",
+      "detail": "Tell us your pace and what you want to see. We shape the days to fit, and rework them on the road when the weather turns."
+    },
+    {
+      "title": "24/7 on-trip support",
+      "detail": "One number, always answered, from pickup to drop-off. If something changes, we handle it while you keep travelling."
+    },
+    {
+      "title": "Honest pricing",
+      "detail": "The price we quote is the price you pay. Inclusions listed plainly, no surprise add-ons at the houseboat jetty."
+    }
+  ],
+  "about": {
+    "story": [
+      "Munnar 360° Planner started with a simple frustration: the standard Kerala tour rushes you past the best of it. Fifteen minutes at a viewpoint, back on the bus, on to the next photo stop.",
+      "We do it the way we'd show a friend. A local team plans routes around the light and the seasons — sunrise on the right ridge, the backwaters when they're quiet, the trails the coaches can't reach.",
+      "One trip, three worlds: the tea hills, the backwaters, and the offbeat trails in between. That's the 360°."
+    ],
+    "positioning": "Kerala is God's Own Country. We just help you see it properly."
+  }
+}
