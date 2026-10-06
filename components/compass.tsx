@@ -26,6 +26,7 @@ import { priceFrom } from "@/lib/utils";
 const STEP = 120; // degrees between nodes
 // Overshoot snap easing from the spec: cubic-bezier(.34,1.3,.5,1)
 const SNAP_EASE = [0.34, 1.3, 0.5, 1] as const;
+const getNow = () => Date.now();
 
 export function Compass({ experiences }: { experiences: Experience[] }) {
   const nodes = experiences.slice(0, 3);
@@ -37,11 +38,11 @@ export function Compass({ experiences }: { experiences: Experience[] }) {
   const manualUntil = useRef<number>(0);
 
   const rotate = (dir: 1 | -1) => {
-    manualUntil.current = Date.now() + 1200;
+    manualUntil.current = getNow() + 1200;
     setActive((i) => (i + dir + nodes.length) % nodes.length);
   };
   const goTo = (i: number) => {
-    manualUntil.current = Date.now() + 1200;
+    manualUntil.current = getNow() + 1200;
     setActive(i);
   };
 
@@ -53,7 +54,7 @@ export function Compass({ experiences }: { experiences: Experience[] }) {
   });
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     if (reduce) return;
-    if (Date.now() < manualUntil.current) return;
+    if (getNow() < manualUntil.current) return;
     const idx = Math.min(nodes.length - 1, Math.max(0, Math.round(p * (nodes.length - 1))));
     setActive((cur) => (cur === idx ? cur : idx));
   });

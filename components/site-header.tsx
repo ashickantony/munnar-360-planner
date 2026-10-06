@@ -1,16 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import type { Site } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
-import { CompassMark } from "@/components/compass-mark";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader({ site }: { site: Site }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const solid = scrolled || pathname !== "/";
 
   // Transparent over the hero, solid mist after a little scroll.
   useEffect(() => {
@@ -24,7 +27,7 @@ export function SiteHeader({ site }: { site: Site }) {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
-        scrolled
+        solid
           ? "bg-mist/95 backdrop-blur-sm shadow-[0_1px_0_rgba(59,74,37,0.12)]"
           : "bg-transparent"
       )}
@@ -32,18 +35,22 @@ export function SiteHeader({ site }: { site: Site }) {
       <div className="section-shell flex h-16 items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2.5"
+          className="flex min-w-0 items-center rounded-lg bg-deep-forest/85 px-2.5 py-1.5 shadow-sm backdrop-blur-sm"
           aria-label={`${site.brandName} home`}
         >
-          <CompassMark className="h-8 w-8 shrink-0" />
-          <span
+          <Image
+            src="/brand/logo-full.png"
+            alt="Munnar 360° Planner — God’s Own Country"
+            width={1845}
+            height={464}
+            unoptimized
+            priority
+            loading="eager"
             className={cn(
-              "font-display text-lg uppercase tracking-[0.12em]",
-              scrolled ? "text-moss" : "text-cream"
+              "h-12 w-auto max-w-[min(48vw,15rem)] object-contain object-left transition-[filter] duration-300",
+              solid && "drop-shadow-[0_1px_1px_rgba(17,42,36,0.22)]"
             )}
-          >
-            {site.brandName}
-          </span>
+          />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -53,7 +60,7 @@ export function SiteHeader({ site }: { site: Site }) {
               href={item.href}
               className={cn(
                 "font-body text-sm font-medium transition-colors hover:text-gold",
-                scrolled ? "text-moss" : "text-cream"
+                solid ? "text-moss" : "text-cream"
               )}
             >
               {item.label}
@@ -67,7 +74,7 @@ export function SiteHeader({ site }: { site: Site }) {
         <button
           className={cn(
             "md:hidden",
-            scrolled ? "text-moss" : "text-cream"
+            solid ? "text-moss" : "text-cream"
           )}
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}

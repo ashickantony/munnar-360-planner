@@ -1,11 +1,12 @@
-# Image slots — client photo swap guide
+# Travel and destination photography
 
-Every image below is a **brand-gradient placeholder** generated for the trial. To
-go live, replace each file with a real photo **using the exact same filename** and
-it drops straight in — no code changes needed. Keep them roughly landscape
-(≈4:3 or 16:9), JPGs, ideally ≥1600px wide.
+This folder contains the travel photos supplied in the Munnar 360° Planner
+photography PDF, rendered into the existing image slots. Keep destination and
+package photography here. Brand marks and typefaces belong in `public/brand/`.
 
-To regenerate the placeholders: `node scripts/generate-placeholders.mjs`
+Each image is referenced by the corresponding JSON entry in `content/`. Replace
+a photo using the same filename to keep the swap drop-in; landscape images around
+4:3 or 16:9 and at least 1600px wide are recommended.
 
 ## Experiences (`content/experiences.json`)
 
@@ -34,9 +35,7 @@ To regenerate the placeholders: `node scripts/generate-placeholders.mjs`
 
 ## Notes
 
-- The **hero** background on the home page is an intentional CSS gradient
-  (valley + mist stand-in), not a file. If the client supplies a hero photo,
-  add it as `public/images/hero-valley.jpg` and wire it into
-  `components/hero.tsx` behind the gradient.
+- `hero-1.jpg` is the concept image used for the home-page hero background.
+- `hero-2.jpg` is the second concept image, currently kept as an unused alternate.
 - Alt text is generated from each experience/package title; no per-file alt is
   needed, but you can refine alts in the page components if desired.

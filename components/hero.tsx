@@ -37,7 +37,14 @@ export function Hero({ site }: { site: Site }) {
         style={reduce ? undefined : { y: yBack }}
         className="absolute inset-0 -z-20"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-teal-water via-moss to-deep-forest" />
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/images/hero-1.jpg')",
+            filter: "saturate(0.92) contrast(1.05) brightness(0.8)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-teal-water/80 via-moss/70 to-deep-forest/90" />
         <div
           className="absolute inset-0"
           style={{
@@ -108,7 +115,7 @@ export function Hero({ site }: { site: Site }) {
           Kerala
         </motion.h1>
 
-        <p className="eyebrow mt-3 text-gold">{site.tagline}</p>
+        <p className="eyebrow mt-3 text-gold tracking-[0.32em]">{site.tagline}</p>
 
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 12 }}

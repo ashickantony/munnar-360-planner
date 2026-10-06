@@ -34,16 +34,38 @@ const spaceMono = Space_Mono({
 const site = getSite();
 
 export const metadata: Metadata = {
-  // PHASE 2: per-route metadata, sitemap, and TravelAgency/TouristTrip structured data.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://munnar-360-planner.vercel.app"),
+  icons: {
+    icon: "/brand/icon.png",
+  },
   title: `${site.brandName} Planner — ${site.tagline}`,
   description:
-    "Kerala trips built by a local team — misty Munnar tea hills, Alleppey backwater houseboats, and offbeat trails. Tell us your dates, we'll build the route.",
-  metadataBase: new URL("https://munnar-360-planner.vercel.app"),
+    "Kerala trips built by a local team — misty Munnar tea hills, Alleppey backwater houseboats, and offbeat trails. Tell us your dates, and we'll build the route.",
+  applicationName: `${site.brandName} Planner`,
+  keywords: [
+    "Munnar trip planner",
+    "Kerala tour packages",
+    "Munnar tea hills",
+    "Alleppey backwaters",
+    "offbeat Kerala experiences",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: `${site.brandName} Planner — ${site.tagline}`,
     description:
-      "Kerala trips built by a local team — tea hills, backwaters, and offbeat trails.",
+      "Kerala trips designed by locals — tea hills, backwaters, and offbeat trails curated around your dates.",
     type: "website",
+    url: "/",
+    siteName: `${site.brandName} Planner`,
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.brandName} Planner — ${site.tagline}`,
+    description:
+      "Plan your Munnar and Kerala trip with a local team that handles the route, stays, and experiences.",
   },
 };
 

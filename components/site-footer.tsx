@@ -1,7 +1,7 @@
 import { Phone, Instagram } from "lucide-react";
+import Image from "next/image";
 import type { Site } from "@/lib/schemas";
 import { EnquiryForm } from "@/components/enquiry-form";
-import { CompassMark } from "@/components/compass-mark";
 
 /**
  * The enquiry footer (spec 4.1 §7). Rendered site-wide so every page ends on a
@@ -51,10 +51,14 @@ export function SiteFooter({ site }: { site: Site }) {
       <div className="border-t border-mist/10">
         <div className="section-shell flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
           <div className="flex items-center gap-2.5">
-            <CompassMark className="h-7 w-7" />
-            <span className="font-display text-sm uppercase tracking-[0.12em] text-mist">
-              {site.brandName} Planner
-            </span>
+            <Image
+              src="/brand/logo-full.png"
+              alt="Munnar 360° Planner — God’s Own Country"
+              width={1845}
+              height={464}
+              unoptimized
+              className="h-12 w-auto max-w-[min(70vw,15rem)] object-contain object-left"
+            />
           </div>
           <p className="font-body text-xs text-mist/50">
             {site.tagline} · Built by Synark42 / Anulink Solutions
