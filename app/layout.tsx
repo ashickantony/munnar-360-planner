@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Anton, Caveat, Plus_Jakarta_Sans, Space_Mono } from "next/font/google";
 import "./globals.css";
-import { getSite } from "@/lib/content";
+import { getExperiences, getPackages, getSite } from "@/lib/content";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ContactWidgets } from "@/components/contact-widgets";
 
 // The four brand typefaces, exposed as CSS variables for Tailwind's fontFamily.
 const anton = Anton({
@@ -32,6 +33,8 @@ const spaceMono = Space_Mono({
 });
 
 const site = getSite();
+const experiences = getExperiences();
+const packages = getPackages();
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://munnar-360-planner.vercel.app"),
@@ -89,6 +92,11 @@ export default function RootLayout({
         <SiteHeader site={site} />
         <main id="main">{children}</main>
         <SiteFooter site={site} />
+        <ContactWidgets
+          site={site}
+          packages={packages}
+          experiences={experiences}
+        />
       </body>
     </html>
   );

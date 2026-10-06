@@ -1,5 +1,6 @@
 import { Phone, Instagram } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import type { Site } from "@/lib/schemas";
 import { EnquiryForm } from "@/components/enquiry-form";
 
@@ -63,6 +64,12 @@ export function SiteFooter({ site }: { site: Site }) {
           <p className="font-body text-xs text-mist/50">
             {site.tagline} · Built by Synark42 / Anulink Solutions
           </p>
+          <Link
+            href="/privacy"
+            className="font-body text-xs text-mist/60 underline decoration-mist/20 underline-offset-4 hover:text-gold"
+          >
+            Privacy notice
+          </Link>
         </div>
       </div>
     </footer>

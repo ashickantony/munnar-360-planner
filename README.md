@@ -1,16 +1,17 @@
 # Munnar 360° Planner
 
-A static, production-quality lead-generation site for **Munnar 360° Planner** — a
+A content-driven lead-generation site for **Munnar 360° Planner** — a
 Kerala trip planner selling three signature experiences (Tea Hills, Backwaters,
 Offbeat Trails). Built to feel the mist and make visitors want to enquire.
 
-> Trial build. No backend/database yet — all content is static JSON, structured
-> so phase-2 features (CMS, bookings, payments) slot in without a rewrite.
+> The trip helper is local, rules-based, and uses published site content; it does
+> not call a paid AI API. Enquiries require configured Resend delivery; there
+> is no enquiry database, booking, or payment system yet.
 > Built by Synark42 / Anulink Solutions.
 
 ## Stack
 
-- **Next.js 15** (App Router) + **TypeScript**
+- **Next.js 16** (App Router) + **TypeScript**
 - **Tailwind CSS** (brand token system) + **shadcn/ui**-style primitives
 - **Framer Motion** — hero parallax, the 360° compass, scroll reveals
 - **next/font** — Anton, Caveat, Plus Jakarta Sans, Space Mono
@@ -36,13 +37,14 @@ node scripts/generate-placeholders.mjs   # regenerate placeholder images
 
 ```
 app/
-  layout.tsx                 # fonts, header, footer (site-wide enquiry footer)
+  layout.tsx                 # fonts, header, footer, and contact widgets
   page.tsx                   # home: hero → compass → packages → why-us → reviews
   experiences/[slug]/        # tea-hills, backwaters, offbeat-trails
   packages/[slug]/           # backwater-escape, munnar-mist, full-360-kerala
   about/
-  api/enquiry/route.ts       # trial enquiry handler (validates + logs, optional email)
-components/                  # hero, compass, header, footer, enquiry form, cards…
+  privacy/
+  api/enquiry/route.ts       # validates enquiries and requires successful Resend delivery
+components/                  # hero, compass, contact widgets, header, footer, cards…
 content/                     # site / experiences / packages / reviews JSON
 lib/                         # schemas.ts (Zod), content.ts (typed loaders), utils.ts
 public/images/               # placeholder photos + README mapping for the client swap
@@ -65,13 +67,23 @@ top and updates the detail panel. Driven by a rotate button, node clicks, ←/�
 keys, touch swipe, and scroll-linked rotation, with an overshoot snap
 (`cubic-bezier(.34,1.3,.5,1)`). Fully reduced-motion aware.
 
-## Enquiry handling (trial)
+## Enquiry handling
 
-`components/enquiry-form.tsx` POSTs to `app/api/enquiry/route.ts`, which validates
-and logs the lead (and emails via Resend if `RESEND_API_KEY` is set — see
-`.env.example`). Always-available fallbacks sit alongside: `tel:` links and a
-`wa.me` WhatsApp deep link. The `onSubmit` seam is isolated so phase 2 can point
-it at a real pipeline without touching the UI.
+`components/enquiry-form.tsx` POSTs to `app/api/enquiry/route.ts`. The route
+validates the payload and reports success only after Resend accepts the message.
+Set `RESEND_API_KEY`, `ENQUIRY_TO`, and `ENQUIRY_FROM` in Vercel; without them
+the form returns an error and directs visitors to the always-available phone
+and WhatsApp contacts instead. Configure a verified sender address before
+accepting live enquiries.
+
+## Trip helper and contact buttons
+
+The site-wide trip helper suggests packages and experiences from the published
+JSON content. It is a free local rules-based guide, not a generative AI chatbot.
+Conversations stay in browser memory only. It cannot confirm availability or
+final prices. Visitors can hand off to the persistent WhatsApp contact button.
+Review `/privacy` and customize its contact/data-handling details for the
+business before launch.
 
 ## Deploy to Vercel
 
@@ -83,8 +95,9 @@ vercel            # first deploy (preview URL)
 vercel --prod     # production
 ```
 
-Or push to GitHub and "Import Project" in the Vercel dashboard. Optionally set
-`RESEND_API_KEY`, `ENQUIRY_TO`, `ENQUIRY_FROM` as environment variables.
+Or push to GitHub and "Import Project" in the Vercel dashboard. Before taking
+enquiries, configure `RESEND_API_KEY`, `ENQUIRY_TO`, `ENQUIRY_FROM`, and
+`NEXT_PUBLIC_SITE_URL` as environment variables.
 
 ## Phase 2 seams (not built — marked in code with `// PHASE 2:`)
 

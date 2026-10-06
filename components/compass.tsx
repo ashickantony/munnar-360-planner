@@ -125,7 +125,7 @@ export function Compass({ experiences }: { experiences: Experience[] }) {
                 key={exp.slug}
                 className="absolute left-1/2 top-1/2 h-0 w-0"
                 style={{
-                  transform: `rotate(${base}deg) translateY(-150px)`,
+                  transform: `rotate(${base}deg) translateY(-clamp(5rem, 28vw, 9.375rem))`,
                 }}
               >
                 {/* counter-rotate so the node stays upright */}

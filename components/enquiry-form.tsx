@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { whatsappLink } from "@/lib/content";
@@ -11,8 +11,8 @@ type Status = "idle" | "submitting" | "success" | "error";
 /**
  * Enquiry form. Kept deliberately isolated: the `onSubmit` handler is the single
  * seam that PHASE 2 can repoint at a real lead pipeline (CRM / WhatsApp Business
- * API / email) without touching this markup. Always-available fallbacks (tel:,
- * wa.me) sit alongside so a visitor can reach the team even if the POST is a no-op.
+ * API / email) without touching this markup. Always-available phone and
+ * WhatsApp fallbacks sit alongside the form.
  */
 export function EnquiryForm({
   site,
@@ -21,7 +21,9 @@ export function EnquiryForm({
   site: Site;
   presetExperience?: string;
 }) {
+  const formId = useId();
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -40,17 +42,24 @@ export function EnquiryForm({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("submitting");
+    setErrorMessage("");
     try {
-      // PHASE 2: point this at the real enquiry pipeline. The route below
-      // validates and (optionally) emails; the UI contract stays the same.
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, presetExperience }),
       });
-      if (!res.ok) throw new Error("Request failed");
+      const result: { error?: string } = await res.json();
+      if (!res.ok) {
+        throw new Error(result.error ?? "We couldn’t send your enquiry. Please try again.");
+      }
       setStatus("success");
-    } catch {
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "We couldn’t send your enquiry. Please try again."
+      );
       setStatus("error");
     }
   }
@@ -60,8 +69,8 @@ export function EnquiryForm({
       <div className="rounded-card bg-cream/10 p-8 text-center">
         <p className="font-script text-3xl text-gold">Thank you!</p>
         <p className="mt-2 font-body text-mist/90">
-          We&apos;ve got your enquiry. Our team will reach out shortly to build
-          your route. For anything urgent, call or WhatsApp us below.
+          Your enquiry was delivered to our team. We&apos;ll reach out shortly
+          to build your route. For anything urgent, call or WhatsApp us below.
         </p>
       </div>
     );
@@ -71,15 +80,16 @@ export function EnquiryForm({
     "w-full rounded-lg border border-mist/20 bg-deep-forest/40 px-4 py-3 font-body text-mist placeholder:text-mist/40 focus-visible:border-gold";
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4" noValidate>
+    <form onSubmit={onSubmit} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="eyebrow mb-1.5 block">
+          <label htmlFor={`${formId}-name`} className="eyebrow mb-1.5 block">
             Name
           </label>
           <input
-            id="name"
+            id={`${formId}-name`}
             required
+            maxLength={120}
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             className={inputClass}
@@ -88,11 +98,11 @@ export function EnquiryForm({
           />
         </div>
         <div>
-          <label htmlFor="email" className="eyebrow mb-1.5 block">
+          <label htmlFor={`${formId}-email`} className="eyebrow mb-1.5 block">
             Email
           </label>
           <input
-            id="email"
+            id={`${formId}-email`}
             type="email"
             required
             value={form.email}
@@ -104,11 +114,12 @@ export function EnquiryForm({
         </div>
       </div>
       <div>
-        <label htmlFor="dates" className="eyebrow mb-1.5 block">
+        <label htmlFor={`${formId}-dates`} className="eyebrow mb-1.5 block">
           Travel dates
         </label>
         <input
-          id="dates"
+          id={`${formId}-dates`}
+          maxLength={120}
           value={form.dates}
           onChange={(e) => setForm({ ...form, dates: e.target.value })}
           className={inputClass}
@@ -116,12 +127,13 @@ export function EnquiryForm({
         />
       </div>
       <div>
-        <label htmlFor="message" className="eyebrow mb-1.5 block">
+        <label htmlFor={`${formId}-message`} className="eyebrow mb-1.5 block">
           Your trip
         </label>
         <textarea
-          id="message"
+          id={`${formId}-message`}
           rows={4}
+          maxLength={1500}
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           className={inputClass}
@@ -131,8 +143,8 @@ export function EnquiryForm({
 
       {status === "error" && (
         <p className="font-body text-sm text-gold" role="alert">
-          Something went wrong sending that. Please WhatsApp or call us — links
-          just below.
+          {errorMessage || "Something went wrong sending that."} Please WhatsApp
+          or call us using the links below.
         </p>
       )}
 
