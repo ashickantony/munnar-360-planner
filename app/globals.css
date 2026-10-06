@@ -62,4 +62,18 @@
   .section-shell {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
+
+  .compass-rotation {
+    transition: transform 0.9s cubic-bezier(0.34, 1.3, 0.5, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
+  }
+
+  .compass-rotation {
+    transition: none;
+  }
 }

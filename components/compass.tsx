@@ -24,42 +24,59 @@ import { priceFrom } from "@/lib/utils";
  */
 
 const STEP = 120; // degrees between nodes
-// Overshoot snap easing from the spec: cubic-bezier(.34,1.3,.5,1)
-const SNAP_EASE = [0.34, 1.3, 0.5, 1] as const;
-const getNow = () => Date.now();
 
 export function Compass({ experiences }: { experiences: Experience[] }) {
   const nodes = experiences.slice(0, 3);
   const [active, setActive] = useState(0);
+  const [ringRotation, setRingRotation] = useState(0);
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
-  // Pause scroll-driven changes briefly after a manual interaction.
-  const manualUntil = useRef<number>(0);
+  const activeRef = useRef(0);
+  const manualOverride = useRef(false);
+
+  function changeActive(next: number, manual = false) {
+    const current = activeRef.current;
+    if (next === current) return;
+
+    const forward = (next - current + nodes.length) % nodes.length;
+    const steps = forward > nodes.length / 2 ? forward - nodes.length : forward;
+    activeRef.current = next;
+    manualOverride.current ||= manual;
+    setActive(next);
+    setRingRotation((rotation) => rotation - steps * STEP);
+  }
 
   const rotate = (dir: 1 | -1) => {
-    manualUntil.current = getNow() + 1200;
-    setActive((i) => (i + dir + nodes.length) % nodes.length);
+    changeActive((activeRef.current + dir + nodes.length) % nodes.length, true);
   };
   const goTo = (i: number) => {
-    manualUntil.current = getNow() + 1200;
-    setActive(i);
+    changeActive(i, true);
   };
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) manualOverride.current = false;
+    });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   // Scroll-linked rotation: map the section's progress through the viewport to
-  // the active node, unless the user just interacted manually.
+  // the active node, unless the user has taken control of the compass.
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start center", "end center"],
   });
   useMotionValueEvent(scrollYProgress, "change", (p) => {
-    if (reduce) return;
-    if (getNow() < manualUntil.current) return;
+    if (reduce || manualOverride.current) return;
     const idx = Math.min(nodes.length - 1, Math.max(0, Math.round(p * (nodes.length - 1))));
-    setActive((cur) => (cur === idx ? cur : idx));
+    changeActive(idx);
   });
 
-  const ringRotation = -active * STEP;
   const activeExp = nodes[active];
 
   return (
@@ -87,35 +104,22 @@ export function Compass({ experiences }: { experiences: Experience[] }) {
       }}
     >
       {/* The ring */}
-      <div className="relative mx-auto aspect-square w-full max-w-[380px]">
+      <div className="relative mx-auto aspect-square w-full max-w-[380px] overflow-x-clip overflow-y-visible">
         {/* dashed orbit */}
         <div className="absolute inset-2 rounded-full border-2 border-dashed border-gold/60" />
         <div className="absolute inset-8 rounded-full border border-moss/15" />
 
         {/* centre compass */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div
-            animate={reduce ? undefined : { rotate: [0, 360] }}
-            transition={
-              reduce
-                ? undefined
-                : { duration: 40, ease: "linear", repeat: Infinity }
-            }
-            className="flex h-20 w-20 items-center justify-center rounded-full bg-gold text-deep-forest shadow-lg"
-          >
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gold text-deep-forest shadow-lg">
             <CompassIcon className="h-9 w-9" strokeWidth={1.5} />
-          </motion.div>
+          </div>
         </div>
 
         {/* rotating layer holding the nodes */}
-        <motion.div
-          className="absolute inset-0"
-          animate={{ rotate: ringRotation }}
-          transition={
-            reduce
-              ? { duration: 0 }
-              : { duration: 0.9, ease: SNAP_EASE }
-          }
+        <div
+          className="compass-rotation absolute inset-0"
+          style={{ transform: `rotate(${ringRotation}deg)` }}
         >
           {nodes.map((exp, i) => {
             const base = i * STEP;
@@ -125,20 +129,17 @@ export function Compass({ experiences }: { experiences: Experience[] }) {
                 key={exp.slug}
                 className="absolute left-1/2 top-1/2 h-0 w-0"
                 style={{
-                  transform: `rotate(${base}deg) translateY(-clamp(5rem, 28vw, 9.375rem))`,
+                  transform: `rotate(${base}deg) translateY(clamp(-9.375rem, -28vw, -5rem))`,
                 }}
               >
                 {/* counter-rotate so the node stays upright */}
-                <motion.button
+                <button
                   type="button"
                   onClick={() => goTo(i)}
                   aria-label={`Show ${exp.title}`}
                   aria-pressed={isActive}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full outline-offset-4"
-                  animate={{ rotate: -base - ringRotation }}
-                  transition={
-                    reduce ? { duration: 0 } : { duration: 0.9, ease: SNAP_EASE }
-                  }
+                  className="compass-rotation absolute -left-12 -top-12 rounded-full outline-offset-4"
+                  style={{ transform: `rotate(${-base - ringRotation}deg)` }}
                 >
                   <span
                     className={[
@@ -155,11 +156,11 @@ export function Compass({ experiences }: { experiences: Experience[] }) {
                       {priceFrom(exp.priceFrom)}
                     </span>
                   </span>
-                </motion.button>
+                </button>
               </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
 
       {/* Detail panel */}
@@ -169,9 +170,9 @@ export function Compass({ experiences }: { experiences: Experience[] }) {
         </p>
         <motion.div
           key={activeExp.slug}
-          initial={reduce ? false : { opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: reduce ? 0 : 0.4 }}
         >
           <h3 className="mt-2 font-display text-4xl uppercase tracking-wide text-moss sm:text-5xl">
             {activeExp.title}

@@ -50,7 +50,7 @@ export function SiteFooter({ site }: { site: Site }) {
       </div>
 
       <div className="border-t border-mist/10">
-        <div className="section-shell flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
+        <div className="section-shell flex flex-col items-center gap-4 py-6 text-center sm:flex-row sm:flex-wrap sm:justify-center lg:justify-between lg:text-left">
           <div className="flex items-center gap-2.5">
             <Image
               src="/brand/logo-full.png"
@@ -58,7 +58,7 @@ export function SiteFooter({ site }: { site: Site }) {
               width={1845}
               height={464}
               unoptimized
-              className="h-12 w-auto max-w-[min(70vw,15rem)] object-contain object-left"
+              className="h-10 w-auto max-w-[min(70vw,15rem)] object-contain object-left sm:h-12"
             />
           </div>
           <p className="font-body text-xs text-mist/50">

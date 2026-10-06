@@ -35,7 +35,11 @@ a photo using the same filename to keep the swap drop-in; landscape images aroun
 
 ## Notes
 
-- `hero-1.jpg` is the concept image used for the home-page hero background.
-- `hero-2.jpg` is the second concept image, currently kept as an unused alternate.
+- `munnar-video-poster.jpg` is the home-page poster and reduced-motion
+  fallback, taken from the supplied hero video.
+- `hero-1.jpg` and `hero-2.jpg` are alternate concept images.
+- `../videos/munnar-hero.mp4` is a muted, optimized version of the supplied
+  hero video, with a light green color grade. The hero keeps `munnar-hero.jpg` as
+  its poster and static fallback for reduced-motion preferences.
 - Alt text is generated from each experience/package title; no per-file alt is
   needed, but you can refine alts in the page components if desired.

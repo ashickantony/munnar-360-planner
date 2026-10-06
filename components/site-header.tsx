@@ -32,10 +32,10 @@ export function SiteHeader({ site }: { site: Site }) {
           : "bg-transparent"
       )}
     >
-      <div className="section-shell flex h-16 items-center justify-between">
+      <div className="section-shell flex h-16 items-center justify-between gap-3">
         <Link
           href="/"
-          className="flex min-w-0 items-center rounded-lg bg-deep-forest/85 px-2.5 py-1.5 shadow-sm backdrop-blur-sm"
+          className="flex min-w-0 shrink items-center rounded-lg bg-deep-forest/85 px-2 py-1 shadow-sm backdrop-blur-sm sm:px-2.5"
           aria-label={`${site.brandName} home`}
         >
           <Image
@@ -47,7 +47,7 @@ export function SiteHeader({ site }: { site: Site }) {
             priority
             loading="eager"
             className={cn(
-              "h-12 w-auto max-w-[min(48vw,15rem)] object-contain object-left transition-[filter] duration-300",
+              "h-10 w-auto max-w-[min(54vw,15rem)] object-contain object-left transition-[filter] duration-300 sm:h-11",
               solid && "drop-shadow-[0_1px_1px_rgba(17,42,36,0.22)]"
             )}
           />
@@ -73,7 +73,7 @@ export function SiteHeader({ site }: { site: Site }) {
 
         <button
           className={cn(
-            "md:hidden",
+            "shrink-0 rounded-lg p-2 md:hidden",
             solid ? "text-moss" : "text-cream"
           )}
           onClick={() => setOpen((v) => !v)}
